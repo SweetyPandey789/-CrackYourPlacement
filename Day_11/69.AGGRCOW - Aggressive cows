@@ -1,0 +1,35 @@
+AGGRCOW - Aggressive cows
+  public static int solve(int n, int k, int[] stalls) {
+          Arrays.sort(stalls);
+        int low=1;
+        int high=stalls[n-1];
+        
+        while(low<=high){
+            int mid=(low+high)/2;
+            
+            if(isvalid(stalls,n,k,mid)==true){
+                low=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+        }
+        return high;
+    
+    }
+    public static boolean isvalid(int[] st,int n,int k,int mid){
+        int cow=1;
+        int last=st[0];
+        for(int i=1; i<n; i++){
+            if(st[i]-last>=mid){
+                cow++;
+                last=st[i];
+            }
+        }
+        
+        if(cow>=k){
+            return true;
+        }
+        
+        return false;
+    }
