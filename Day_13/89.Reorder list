@@ -1,0 +1,43 @@
+Reorder list
+ public void reorderList(ListNode head) {
+        ListNode mid = findMid(head);
+        ListNode midReversed = reverse(mid, null);    
+        reorder(head, mid, midReversed);
+    }
+
+    private ListNode findMid(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    private ListNode reverse(ListNode head, ListNode prev) {
+        if (head == null) {
+            return head;
+        }
+
+        if (head.next == null) {
+            head.next = prev;
+            return head;
+        }
+
+        ListNode next = head.next;
+        head.next = prev;
+        return reverse(next, head);
+    }
+
+    private void reorder(ListNode left, ListNode midPoint, ListNode right) {
+        while (left != null && right != null && right != midPoint) {
+            ListNode leftNext = left.next;
+            ListNode rightNext = right.next;
+            left.next = right;
+            right.next = leftNext;
+            left = leftNext;
+            right = rightNext;
+        }
