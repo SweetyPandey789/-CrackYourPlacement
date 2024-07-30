@@ -1,0 +1,21 @@
+The Celebrity Problem
+ int celebrity(int M[][], int n) {
+        // code here
+         int res=0;
+        int[]knowme=new int[n];
+        int[]iknow=new int[n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(M[i][j]==1){
+                    knowme[j]++;
+                    iknow[i]++;
+                }
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(knowme[i]==n-1 &&iknow[i]==0){
+                return i;
+            }
+        }
+        return -1;
+    }
