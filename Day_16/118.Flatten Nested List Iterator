@@ -1,0 +1,45 @@
+Flatten Nested List Iterator
+public class NestedIterator implements Iterator<Integer> {
+    
+    List<Integer> answer; // List to store the flatten list.
+    int index; // Index to check for hasNext.
+
+    // Constructor.
+    public NestedIterator(List<NestedInteger> nestedList){
+        this.answer = new ArrayList<Integer>();
+        for(NestedInteger item : nestedList){
+            if(item.isInteger()) this.answer.add(item.getInteger());
+            else{
+                this.answer.addAll(flat(item.getList()));
+            }
+        }
+
+        this.index = 0;
+    }
+
+    // Method to Flatten a NestedList
+    private List<Integer> flat(List<NestedInteger> nestedList) {
+        List<Integer> answer = new ArrayList<Integer>();
+        for(NestedInteger item : nestedList){
+            if(item.isInteger()){
+                answer.add(item.getInteger());
+            }
+            
+            else{
+                answer.addAll(flat(item.getList()));
+            }
+        }
+
+        return answer;
+    }
+
+    @Override
+    public Integer next() {
+        return answer.get(this.index++);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.index < this.answer.size();
+    }
+}
