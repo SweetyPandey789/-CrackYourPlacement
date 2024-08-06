@@ -1,0 +1,31 @@
+Bipartite Graph
+ public boolean isBipartite(int V, ArrayList<ArrayList<Integer>>adj)
+    {
+        // Code here
+          int arr[] = new int[V];
+        for(int i=0;i<V;i++){
+            arr[i] = -1;
+        }
+        Queue<Integer>q = new LinkedList<>();
+        for(int i=0;i<V;i++){
+            if(arr[i] == -1){
+                q.add(i);
+                arr[i] = 0;
+                while(!q.isEmpty()){
+                    int value = q.remove();
+                    for(int j=0;j<adj.get(value).size();j++){
+                        int nbr = adj.get(value).get(j);
+                        if(arr[nbr] == -1){
+                            int n = arr[value] == 0 ? 1 : 0;
+                            arr[nbr] = n;
+                            q.add(nbr);
+                        }
+                        else if(arr[value] == arr[nbr]){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
