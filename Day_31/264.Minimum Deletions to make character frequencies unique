@@ -1,0 +1,29 @@
+public int minDeletions(String s) {
+        HashMap<Character , Integer> map = new HashMap<>();
+        for(int i = 0 ; i < s.length() ; i++){
+            map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);
+        }
+        int count = 0;
+        HashSet<Integer> set = new HashSet<>();
+        HashSet<Character> s2 = new HashSet<>();
+
+        for(int i = 0 ; i < s.length() ; i++){
+            int cnt = map.get(s.charAt(i));
+            if(s2.contains(s.charAt(i))){
+                continue;
+            }else{
+                s2.add(s.charAt(i));
+            }
+
+            if(!set.contains(cnt)){
+                set.add(cnt);
+            }else{
+                while(set.contains(cnt) && cnt > 0){
+                    cnt--;
+                    count++;
+                }
+                set.add(cnt);
+            }
+        }
+        return count;
+    }
