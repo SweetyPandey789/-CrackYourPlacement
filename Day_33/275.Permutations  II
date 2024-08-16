@@ -1,0 +1,40 @@
+Permutations II
+public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> ds = new ArrayList<>();
+        boolean[] flag = new boolean[nums.length];
+        Set<String> keys = new HashSet<>();
+
+        java.util.Arrays.sort(nums);
+        backtrack(0, nums, ds, flag, keys, res);
+        return res;
+    }
+
+    private void backtrack(int ind, int[] nums, List<Integer> ds, boolean[] flag, Set<String> keys, List<List<Integer>> res) {
+        if (ds.size() == nums.length) {
+            String key = createKey(ds);
+            if (!keys.contains(key)) {
+                keys.add(key);
+                res.add(new ArrayList<>(ds));
+            }
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (!flag[i]) {
+                ds.add(nums[i]);
+                flag[i] = true;
+                backtrack(i + 1, nums, ds, flag, keys, res);
+                ds.remove(ds.size() - 1);
+                flag[i] = false;
+            }
+        }
+    }
+
+    private String createKey(List<Integer> ds) {
+        StringBuilder key = new StringBuilder();
+        for (int num : ds) {
+            key.append(num).append('_');
+        }
+        return key.toString();
+    }
